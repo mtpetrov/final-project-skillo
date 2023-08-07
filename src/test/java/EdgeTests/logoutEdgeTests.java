@@ -22,7 +22,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
         };
     }
 
-    @Test
+    @Test(invocationCount = 10)
     public void verifyLogoutButtonFromHomepage(){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
@@ -33,7 +33,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
         Assert.assertTrue(registeredUser.isLogoutButtonNotDisplayed(), "The logout button is incorrectly displayed");
 
     }
-    @Test
+    @Test(invocationCount = 10)
     public void verifyLogoutButtonFromLogin(){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
@@ -48,7 +48,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
 
     }
 
-    @Test(dataProvider = "generateLoginData")
+    @Test(dataProvider = "generateLoginData", invocationCount = 10)
     public void verifyLogoutAfterLogin(String username, String password){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
@@ -66,7 +66,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
         user.logOut();
         Assert.assertTrue(user.isLogoutButtonNotDisplayed(), "The logout button is incorrectly displayed");
     }
-    @Test(dataProvider = "generateRegisterData")
+    @Test(dataProvider = "generateRegisterData", invocationCount = 10)
     public void verifyLogoutAfterRegister(String date){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
@@ -91,7 +91,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
         Assert.assertTrue(registeredUser.isLogoutButtonNotDisplayed(), "The logout button is incorrectly displayed");
 
     }
-    @Test(dataProvider = "generateLoginData")
+    @Test(dataProvider = "generateLoginData", invocationCount = 10)
     public void verifyLogoutFromProfile(String username, String password){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
@@ -123,7 +123,7 @@ public class logoutEdgeTests extends EdgeTestSetupObject {
         Assert.assertTrue(registeredUser.isLogoutButtonNotDisplayed(), "The logout button is incorrectly displayed");
 
     }
-    @Test(dataProvider = "generateLoginData")
+    @Test(dataProvider = "generateLoginData", invocationCount = 10)
     public void verifyLogoutFromNewPost(String username, String password){
         HomePage homePage = new HomePage(getDriver());
         homePage.navigateTo();
