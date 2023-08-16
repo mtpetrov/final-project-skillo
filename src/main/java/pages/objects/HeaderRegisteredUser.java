@@ -1,21 +1,20 @@
-package PageObjects;
+package pages.objects;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RegisteredUser extends Header {
+public class HeaderRegisteredUser extends Header {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
 
-    public RegisteredUser(WebDriver driver) {
+    public HeaderRegisteredUser(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     public void clickProfile(){
@@ -23,27 +22,26 @@ public class RegisteredUser extends Header {
         profileButton.click();
         wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/users"));
     }
+
+    public boolean isProfileButtonDisplayed(){
+        WebElement profileButton = driver.findElement(By.id("nav-link-profile"));
+        return profileButton.isDisplayed();
+    }
     public void clickNewPost(){
         WebElement newPostButton = driver.findElement(By.id("nav-link-new-post"));
         newPostButton.click();
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/create"));
+    }
+    public boolean isPostButtonDisplayed(){
+        WebElement newPostButton = driver.findElement(By.id("nav-link-new-post"));
+        return newPostButton.isDisplayed();
     }
     public void logOut(){
         WebElement logoutButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//i[@class='fas fa-sign-out-alt fa-lg']")));
         logoutButton.click();
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
     }
-    public boolean isLogoutButtonNotDisplayed() {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//i[@class='fas fa-sign-out-alt fa-lg']")));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    public boolean isLogoutButtonDisplayed(){
-        WebElement logoutButton = driver.findElement(By.xpath("//i[@class='fas fa-sign-out-alt fa-lg']"));
-        return logoutButton.isDisplayed();
-    }
+
+
 
 }

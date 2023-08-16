@@ -1,8 +1,9 @@
-package PageObjects;
+package page.factory;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -12,55 +13,52 @@ public class RegisterPage {
     private static final Random random = new Random();
     private final WebDriver driver;
     private final WebDriverWait wait;
+    @FindBy(xpath = "//input[@name='username']")
+    private WebElement usernameField;
+    @FindBy(xpath = "//input[@type='email']")
+    private WebElement emailField;
+    @FindBy(xpath = "//input[@type='date']")
+    private WebElement dateField;
+    @FindBy(id = "defaultRegisterFormPassword")
+    private WebElement passwordField;
+    @FindBy(id = "defaultRegisterPhonePassword")
+    private WebElement confirmPasswordField;
+    @FindBy(xpath = "//textarea[@name='pulic-info']")
+    private WebElement publicTextField;
+    @FindBy(id = "sign-in-button")
+    private WebElement signInButton;
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        PageFactory.initElements(driver, this);
     }
 
-    public void populateUsername() {
-        WebElement usernameField = driver.findElement(By.xpath("//input[@name='username']"));
-        String username = generateUsername(8);
+    public void populateUsername(String username){
+
         usernameField.sendKeys(username);
     }
+    public void populateEmail(String email){
 
-    public void populateEmail() {
-        WebElement passwordField = driver.findElement(By.xpath("//input[@type='email']"));
-        String email = generateEmail(8);
-        passwordField.sendKeys(email);
+        emailField.sendKeys(email);
     }
-
-    public void populateDate(String date) {
-        WebElement dateField = driver.findElement(By.xpath("//input[@type='date']"));
+    public void populateDate(String date){
         dateField.sendKeys(date);
     }
-
-    public void populatePasswordFields() {
-        WebElement passwordField = driver.findElement(By.id("defaultRegisterFormPassword"));
-        String password = generatePassword(6);
+    public void populatePasswordFields(String password){
         passwordField.sendKeys(password);
-        WebElement confirmPasswordField = driver.findElement(By.id("defaultRegisterPhonePassword"));
         confirmPasswordField.sendKeys(password);
     }
 
-    public void populatePublicText() {
-        WebElement publicTextField = driver.findElement(By.xpath("//textarea[@name='pulic-info']"));
+    public void populatePublicText(){
         publicTextField.sendKeys("random text");
     }
 
-    public void clickSignIn() {
-        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
+    public void clickSignIn(){
+        wait.until(ExpectedConditions.elementToBeClickable(signInButton));
         signInButton.click();
     }
 
-    public void register(String date) {
-        populateUsername();
-        populateEmail();
-        populateDate(date);
-        populatePasswordFields();
-        populatePublicText();
-        clickSignIn();
-    }
 
 
     public static String generateUsername(int length) {
@@ -77,12 +75,6 @@ public class RegisterPage {
     }
 
     public static String generateEmail(int length) {
-        String firstPart = generateUsername(8);
-        String secondPart = "@gmail.com";
-        return firstPart + secondPart;
-    }
-
-    public static String generatePassword(int length) {
         String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder sb = new StringBuilder(length);
 
@@ -91,7 +83,23 @@ public class RegisterPage {
             char randomChar = characters.charAt(randomIndex);
             sb.append(randomChar);
         }
-
-        return sb.toString() + random.nextInt();
+        String firstPart = sb.toString();
+        String secondPart = "@gmail.com";
+        return firstPart + secondPart;
     }
+
+    public static String generatePassword(int length) {
+     int randomInt = random.nextInt(10);
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            sb.append(randomChar);
+        }
+        return sb.toString() + randomInt;
+
+    }
+
 }

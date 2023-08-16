@@ -46,6 +46,10 @@
             <artifactId>selenium-java</artifactId>
             <version>4.10.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+
+
+
 
     </dependencies>
 

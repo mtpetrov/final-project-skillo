@@ -1,5 +1,6 @@
-package PageFactory;
+package page.factory;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RegisteredUser extends Header {
+public class HeaderRegisteredUser extends Header {
     private final WebDriver driver;
     private final WebDriverWait wait;
     @FindBy(id = "nav-link-profile")
@@ -20,10 +21,10 @@ public class RegisteredUser extends Header {
     private WebElement logoutButton;
 
 
-    public RegisteredUser(WebDriver driver) {
+    public HeaderRegisteredUser(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         PageFactory.initElements(driver, this);
     }
 
@@ -31,25 +32,22 @@ public class RegisteredUser extends Header {
         profileButton.click();
         wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/users"));
     }
+    public boolean isProfileButtonDisplayed(){
+        return profileButton.isDisplayed();
+    }
     public void clickNewPost(){
         newPostButton.click();
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/create"));
+    }
+    public boolean isPostButtonDisplayed(){
+        return newPostButton.isDisplayed();
     }
     public void logOut(){
         wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
         logoutButton.click();
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
     }
-    public boolean isLogoutButtonNotDisplayed() {
-        try {
-            return wait.until(ExpectedConditions.invisibilityOf(logoutButton));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    public boolean isLogoutButtonDisplayed(){
 
-        return logoutButton.isDisplayed();
-    }
+
 
 }

@@ -1,8 +1,7 @@
-<suite name="Logout tests" verbose="1" parallel="classes" thread-count="2">
+<suite name="Logout tests" verbose="1"  >
     <test name="Parallel Tests">
         <classes>
-            <class name="ChromeTests.logoutChromeTests"></class>
-            <class name="EdgeTests.logoutEdgeTests"></class>
+            <class name="tests.LogoutTests"></class>
         </classes>
     </test>
 </suite>

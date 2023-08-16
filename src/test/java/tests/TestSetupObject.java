@@ -1,4 +1,4 @@
-package ChromeTests;
+package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
@@ -6,6 +6,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -14,10 +15,9 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.time.Duration;
 
-public class ChromeTestSetupObject {
+public class TestSetupObject {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -26,7 +26,7 @@ public class ChromeTestSetupObject {
     @BeforeSuite
     protected final void setUpTestSuite(){
         WebDriverManager.chromedriver().setup();
-
+        WebDriverManager.edgedriver().setup();
     }
 
     @BeforeMethod
@@ -41,7 +41,7 @@ public class ChromeTestSetupObject {
    protected final void tearDownTest(ITestResult testResult){
         takeScreenshot(testResult);
         if (this.driver != null){
-            driver.close();
+           driver.close();
         }
        }
 
